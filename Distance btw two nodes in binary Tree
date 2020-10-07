@@ -1,0 +1,47 @@
+int p=0;
+bool getAncestors(Node* A, int B, stack<pair<int,int>> &s)
+{
+    if(A==NULL)
+    return false;
+    if(A->data==B||getAncestors(A->left,B,s)||getAncestors(A->right,B,s))
+    {
+        
+        s.push({A->data,p});
+        p++;
+        return true;
+    }
+    return false;
+    
+}
+
+int findDist(Node* A, int B, int C) {
+     
+p=0;
+    Node *temp=A;
+    int ans=-1;
+    stack<pair<int,int>> sB,sC;
+    p=0;
+    bool i = getAncestors(A, B, sB);
+    p=0;
+    int ans1=0;
+    i=getAncestors(A, C, sC);
+    
+    if(sB.empty() || sC.empty())
+        return ans;
+    
+   
+         ans1=0;
+        while(!sB.empty() && !sC.empty())
+        {
+            if(sB.top().first == sC.top().first)
+         {       ans1=sB.top().second+sC.top().second;
+         ans=sB.top().first;
+        }
+            
+            sB.pop(); sC.pop();
+        }
+
+   // cout<<ans1;
+    return ans1;
+    // Your code here
+}
